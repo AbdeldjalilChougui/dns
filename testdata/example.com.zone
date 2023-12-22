@@ -1,0 +1,24 @@
+; Example zone used by the tests and the README.
+$ORIGIN example.com.
+$TTL 1h
+@       IN  SOA ns1 hostmaster (
+                2024010101 ; serial
+                2h         ; refresh
+                15m        ; retry
+                2w         ; expire
+                300 )      ; negative-caching TTL
+        IN  NS   ns1
+        IN  NS   ns2.example.net.
+        IN  MX   10 mail
+        IN  TXT  "v=spf1 mx -all" "second string"
+ns1     IN  A    192.0.2.53
+www  300 IN A    192.0.2.10
+     IN  300 AAAA 2001:db8::10
+mail    IN  A    192.0.2.25
+web     IN  CNAME www
+alias       CNAME web            ; CNAME chain inside the zone
+outside     CNAME www.example.org.
+a.b.deep    IN  A 192.0.2.99     ; b.deep and deep are empty non-terminals
+; delegation of sub.example.com with glue
+sub         IN  NS  ns.sub
+ns.sub      IN  A   192.0.2.200
